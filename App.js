@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import Dashboard from './src/screens/Dashboard'
 import TodoList from './src/screens/TodoList'
 import Todo from './src/screens/Todo'
 import AddTodo from './src/screens/AddTodo'
@@ -12,10 +11,16 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}} />
-        <Stack.Screen name="TodoList" component={TodoList} />
-        <Stack.Screen name="Todo" component={Todo} />
-        <Stack.Screen name="AddTodo" component={AddTodo} />
+        <Stack.Screen 
+            name="TodoList" 
+            component={TodoList} 
+        />
+        <Stack.Screen 
+            name="Todo" 
+            component={Todo} />
+        <Stack.Screen 
+            name="AddTodo" 
+            component={AddTodo}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

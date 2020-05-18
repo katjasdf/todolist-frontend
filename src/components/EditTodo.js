@@ -3,40 +3,49 @@ import { StyleSheet, View, Button, TextInput } from 'react-native'
 import todoService from '../services/todos'
 import { useNavigation } from '@react-navigation/native'
 
-export default function AddTodo() {
+export default function EditTodo({todo}) {
     const navigation = useNavigation()
-    const [todos, setTodos] = useState([])
-    const [newTodo, setNewTodo] = useState('')
+    const [todoContent, setTodoContent] = useState(todo.content)
 
-    const addToDatabase = () => {
+    const deleteTodo = () => {
+        todoService
+            .remove(todo.id)
+        navigation.navigate('TodoList')
+    }
+
+    const editTodo = () => {
         const todoObject = {
-            content: newTodo,
-            important: false
+            content: todoContent,
+            important: true
         }
 
         todoService
-            .create(todoObject)
+            .update(todo.id, todoObject)
             .then(returnedTodo => {
                 setTodos(todos.concat(returnedTodo))
                 setNewTodo('')
             })
-        
+            
         navigation.navigate('TodoList')
     }
 
     const handleTodoChange = (event) => {
-        setNewTodo(event.nativeEvent.text)
+        setTodoContent(event.nativeEvent.text)
     }
 
   return (
     <View style={styles.container}>
         <TextInput
-            placeholder='anna jotain'
+            placeholder={todoContent}
             onChange={handleTodoChange}
+        ></TextInput>
+        <Button
+            title='save'
+            onPress={editTodo}
         />
         <Button
-            title='add'
-            onPress={addToDatabase}
+            title='delete'
+            onPress={deleteTodo}
         />
     </View>
   );
