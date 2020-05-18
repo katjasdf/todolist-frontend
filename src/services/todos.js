@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://192.168.10.227:3001/api/todos'
+const baseUrl = 'https://todolist-1000.herokuapp.com/api/todos'
 
 const getAll = () => {
     const request = axios.get(baseUrl)

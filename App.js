@@ -1,34 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import todoService from './src/services/todos'
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import Dashboard from './src/screens/Dashboard'
+import TodoList from './src/screens/TodoList'
+import Todo from './src/screens/Todo'
+import AddTodo from './src/screens/AddTodo'
 
-export default function App() {
-    const [todos, setTodos] = useState([])
+const Stack = createStackNavigator();
 
-  useEffect(() => {
-      todoService
-      .getAll()
-      .then(initialTodos => {
-        setTodos(initialTodos)
-      }).catch()
-  }, [])
-
+function App() {
   return (
-    <View style={styles.container}>
-      {todos.map((todo, i) =>
-      <Text key={i}>
-        {todo.content}
-      </Text>
-      )}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown: false}} />
+        <Stack.Screen name="TodoList" component={TodoList} />
+        <Stack.Screen name="Todo" component={Todo} />
+        <Stack.Screen name="AddTodo" component={AddTodo} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App
