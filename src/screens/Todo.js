@@ -12,22 +12,13 @@ export default function Todo({ route }) {
     const todo = route.params.todo
     const todos = route.params.todos
     const [editing, setEditing] = useState(false)
-    const [text, setText] = useState('edit')
 
     // setting the button text based on the editing view status
-    const changeText = () => {
-    switch (editing) {
-        case false:
-        return 'cancel'
-        case true:
-        return 'edit'
-        }
-    }
+    const text = editing ? 'cancel' : 'edit'
 
     // setting editing view status based on edit/cancel button onPress
     const changePhase = () => {
         setEditing(!editing)
-        setText(changeText)
     }
 
     // deteting item based on todo.id which sets right endpoint for http request

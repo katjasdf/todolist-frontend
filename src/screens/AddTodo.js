@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View, Button, Text } from 'react-native'
 import { Input } from 'react-native-elements'
+import { Switch } from 'react-native-paper'
 import todoService from '../services/todos'
 
 // view for adding new todo to db
@@ -9,13 +10,14 @@ export default function AddTodo({ route }) {
     const navigation = useNavigation()
     const todos = useState(route.params.todos)
     const [newTodo, setNewTodo] = useState('')
+    const [important, setImportant] = useState(false)
 
     // creating object based on mongooseSchema specification in backend
     // and setting the content value from inputfield
     const addToDatabase = () => {
         const todoObject = {
             content: newTodo,
-            important: false
+            important: important
         }
 
         // callin todos.js create function and sending the todoObject data
@@ -27,8 +29,7 @@ export default function AddTodo({ route }) {
             .then(newTodo => {
                 const newTodoList = todos.concat(newTodo)
                 navigation.navigate('TodoList', { newTodoList })
-            })
-            
+            })           
     }
 
     // handling input change
@@ -36,12 +37,30 @@ export default function AddTodo({ route }) {
         setNewTodo(event.nativeEvent.text)
     }
 
+    // handling important toggle
+    const toggleImportant = () => {
+        setImportant(!important) 
+    }
+
+    // setting on/off text based on todo.important status
+    const toggleText = important ? 'on' : 'off'
+
     return (
         <View style={styles.container}>
             <Input
                 placeholder='todo content'
                 onChange={handleTodoChange}
             />
+            <View style={styles.row}>
+                <Text>
+                    Set important: {toggleText}
+                </Text>
+                <Switch 
+                    value={important}
+                    onValueChange={toggleImportant}
+                    style={{marginLeft: 10}} 
+                />
+            </View>
             <Button
                 title='add'
                 onPress={addToDatabase}
@@ -61,5 +80,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  row: {
+      flexDirection: 'row',
+      alignItems: 'center'
+  }
 });
 
