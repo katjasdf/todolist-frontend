@@ -1,39 +1,31 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
-import todoService from '../services/todos'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import Moment from 'moment'
 
-export default function TodoData({ todo, todos }) {
-    const navigation = useNavigation()
-    const [todoList, setTodoList] = useState(todos)
-
-    const deleteTodo = () => {
-        todoService
-            .remove(todo.id)
-            .then(() => {
-                setTodoList(todos.filter(todo => todo.id !== todo.id))
-            })
-        navigation.navigate('TodoList', { todoList })
-    }
+// one of two Todo.js view phases (view phase)
+// showing selected todo date based on props
+export default function TodoData({ todo }) {
 
   return (
     <View style={styles.container}>
-        <Text>{todo.content}</Text>
-        <Text>{todo.date}</Text>
-        <Button
-            title='delete'
-            onPress={deleteTodo}
-        />
+        <Text style={styles.header}>{todo.content}</Text>
+        <Text style={styles.date}>{Moment(todo.date).format('DD.MM.YYYY')}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop: 20,
+    paddingLeft: 10
   },
+  header: {
+      fontSize: 24,
+      marginBottom: 10
+  },
+  date: {
+      fontSize: 14,
+  }
 });
 

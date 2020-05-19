@@ -1,6 +1,9 @@
+// importing axios library that is used for promise based HTTP request
+// setting baseURL which is the endpoint where requests get the data
 import axios from 'axios'
 const baseUrl = 'https://todolist-1000.herokuapp.com/api/todos'
 
+// creating basic CRUD function requests, get, post, put and delete
 const getAll = () => {
     const request = axios.get(baseUrl)
     return request.then(response => response.data).catch()

@@ -5,6 +5,7 @@ import TodoList from './src/screens/TodoList'
 import Todo from './src/screens/Todo'
 import AddTodo from './src/screens/AddTodo'
 
+// creating stackNavigation
 const Stack = createStackNavigator();
 
 function App() {
