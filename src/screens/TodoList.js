@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, View } from 'react-native'
 import { FAB } from 'react-native-paper'
-import { ListItem } from 'react-native-elements'
+import { ListItem, Icon } from 'react-native-elements'
 import todoService from '../services/todos'
 
 export default function TodoList({ route }) {
@@ -25,16 +25,20 @@ export default function TodoList({ route }) {
         <View style={styles.container}>
             <View>
             {
-                todos.map((item, i) => (
+                todos.map((item, i) => {
+
+                    // setting icon based on if the item is important or not
+                    const icon = item.important ? 'priority-high' : null
+                return (
                     <ListItem
                         key={i}
                         title={item.content}
                         bottomDivider
-                        chevron
+                        rightIcon={<Icon name={icon} color='red'/>}
                         style={{width: 400}}
                         onPress={() => navigation.navigate('Todo', { todo: item, todos })}
                     />
-                ))
+                )})
             }
             </View>
             <FAB 
